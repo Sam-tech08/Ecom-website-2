@@ -1,0 +1,51 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="container px-4 px-lg-5 bg-light">
+                <a class="navbar-brand" href="#!">SAM@ECommerce</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                        <li class="nav-item dropdown">
+                        <li><form class="d-flex justify-content-end" role="search" method="POST" action="{% url 'search' %}">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched" >
+                            <button class="btn btn-outline-success" type="submit" >Search</button>
+                            {% csrf_token %}
+                            </form>
+                        <li><div class="dropdown">
+                          <a class="btn btn-outline-secondary dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                          </a>
+                          <ul class="dropdown-menu">
+                              {% for i in products %}
+                            <li><a class="dropdown-item" href="{% url 'category' i.category %}">{{ i.category }}</a></li>
+                              {% endfor %}
+                          </ul>
+                        </div></li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">logout</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                        </li>
+                    </ul>
+
+                        {% if user.is_authenticated %}
+                             <form class="d-flex " >
+                                <a href="{% url 'cart_view' %}" class="btn btn-outline-secondary">
+                                    <i type="submit" class="bi-cart-fill me-1"></i>
+                                    Cart
+
+                                    </a>
+                            </form>
+
+                            {% endif %}
+
+
+                    </form>
+                </div>
+            </div>
+        </nav>

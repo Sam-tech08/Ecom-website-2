@@ -1,0 +1,52 @@
+{% extends 'ecomm/base.html'%}
+{% block content %}
+<section class="bg-dark1" >
+    <header class="bg-dark py-5"></header>
+    <div class="container bg-dark1">
+         <div class="row bg-dark1">
+             <center>
+                 <div class="col-8">
+                     <div class="card text-center">
+                      <div class="card-header">
+                      </div>
+                      <div class="card-body">
+                          <h5 class="card-title">{{ pro.name }}</h5>
+                          <img src="{{ pro.image.url }}">
+                        <p class="card-text">{{ pro.description }}</p>
+                          {% if pro.is_sale %}
+                                    <!-- Product price-->
+                            <strike>{{ pro.price }}</strike>
+                                l&nbsp
+                                rs.{{ pro.sale_value }}
+                            {%else%}
+                          <p class="card-text">{{ pro.price }}</p>
+                          {% endif %}
+                          <br>
+                          {% if user.is_authenticated %}
+                            <form action="{% url 'add_to_cart' pro.id %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-primary" type="submit">Add to cart</button>
+                            </form>
+<br>
+                          {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-primary">Add to Cart</a>
+                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              login to buy the productsss..........
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                          <br>
+                          {% endif %}
+                          <a href="{% url 'homepage' %}" class="btn btn-primary">Home</a>
+                      </div>
+
+                    </div>
+
+                 </div>
+             </center>
+         </div>
+    </div>
+</section>
+
+{% endblock %}
+price
+description

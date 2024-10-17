@@ -1,0 +1,93 @@
+{% extends 'ecomm/base.html' %}
+{% block content %}
+
+
+<header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Ignite your shopping imagination</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">With SAM@EComerce</p>
+                </div>
+            </div>
+        </header>
+<center><a href="{% url 'homepage' %}" class="btn btn-secondary" >Back to Home</a></center>
+        <!-- Section-->
+        <section class="py-5 bg-dark1">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <ul>
+                 {% for product in products %}       <!-- this is for thethe categotries         -->
+        <!-- Header-->
+        <li>                {% for product in products %}
+                                {% if product.is_sale %}
+
+                                <div class="col mb-5">
+                                    <div class="card-body h-100">
+                                        <div class="badge text-bg-danger position absolute" style="top: 0.5rem;right: 0.5rem">SALE</div>
+                                        <!-- Product image-->
+                                        <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                        <!-- Product details-->
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <!-- Product name-->
+                                                <h5 class="fw-bolder"> {{ product.name }}</h5>
+                                                <!-- Product price-->
+                                                <strike>{{ product.price }}</strike>
+                                                &nbsp
+                                                rs.{{ product.sale_value }}
+
+                                            </div>
+                                        </div>
+                                        <!-- Product actions-->
+                                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                            <div class="text-center">
+                                                <form method="POST" action="{% url 'product' product.id %}">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-primary" type="submit" >View product</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+
+                                            <div class="col mb-5">
+                                                <div class="card-body h-100">
+                                                    <!-- Product image-->
+                                                    <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                                    <!-- Product details-->
+                                                    <div class="card-body p-4">
+                                                        <div class="text-center">
+                                                            <!-- Product name-->
+                                                            <h5 class="fw-bolder"> {{ product.name }}</h5>
+                                                            <!-- Product price-->
+                                                            {{ product.price }}
+
+                                                        </div>
+                                                    </div>
+                                                    <!-- Product actions-->
+                                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                        <div class="text-center">
+                                                            <form method="POST" action="{% url 'product' product.id %}">
+                                                                {% csrf_token %}
+                                                                <button class="btn btn-primary" type="submit" >View product</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                {% endif %}
+                        {% endfor %}
+
+
+            </li> <!-- Adjust according to your product fields -->
+        {% empty %}
+            <li>No products available in this category.</li>
+        {% endfor %}
+    </ul>
+
+                </div>
+            </div>
+            </div>
+        </section>
+{% endblock %}
